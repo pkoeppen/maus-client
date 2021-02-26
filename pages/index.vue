@@ -164,7 +164,10 @@
                 </div>
               </div>
               <div class="bg-white w-60 p-6 space-y-3 flex flex-col">
-                <div class="flex mt-2 space-x-2 mb-3">
+                <nuxt-link
+                  to="/channel/featured"
+                  class="flex mt-2 space-x-2 mb-3"
+                >
                   <div class="w-12 h-12 rounded-full overflow-hidden">
                     <img
                       :src="`https://randomuser.me/api/portraits/thumb/women/65.jpg`"
@@ -183,7 +186,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </nuxt-link>
                 <div class="flex-grow relative">
                   <p class="cover text-sm leading-tight overflow-hidden">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed

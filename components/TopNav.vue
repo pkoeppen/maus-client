@@ -6,10 +6,7 @@
     <div class="w-1/3 inline-flex items-center justify-start space-x-6">
       <i class="fas fa-bars w-4" />
       <nuxt-link to="/" class="outline-none text-xs">
-        <img
-          class="h-12"
-          src="https://placeholderlogo.com/img/placeholder-logo-5.png"
-        />
+        <img class="h-12" src="~/assets/svg/maus-logo-centered.svg" />
       </nuxt-link>
     </div>
     <div
