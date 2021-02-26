@@ -1,17 +1,19 @@
 <template>
   <nav
-    class="fixed top-0 w-full flex h-12 px-6 shadow z-10 bg-white"
+    class="fixed top-0 w-full flex justify-between h-12 px-6 shadow z-10 bg-white"
     :class="nightModeEnabled ? 'bg-black text-white' : 'text-gray-900'"
   >
-    <div class="w-1/3 inline-flex items-center justify-start space-x-10">
-      <i class="fas fa-bars w-4" />
-      <nuxt-link to="/" class="outline-none text-xs">
-        <img class="h-6" src="~/assets/svg/maus-logo-centered.svg" />
-      </nuxt-link>
-      <div
-        class="text-gray-600 hover:text-black cursor-pointer text-xs font-bold"
-      >
-        Browse
+    <div class="w-1/3 flex items-center">
+      <div class="w-64 inline-flex items-center justify-between px-6 -ml-6">
+        <i class="fas fa-bars w-4" />
+        <nuxt-link to="/" class="outline-none text-xs">
+          <img class="h-6" src="~/assets/svg/maus-logo-centered.svg" />
+        </nuxt-link>
+        <div
+          class="text-gray-600 hover:text-black cursor-pointer text-xs font-bold"
+        >
+          Browse
+        </div>
       </div>
     </div>
     <div
