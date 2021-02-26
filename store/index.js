@@ -3,9 +3,21 @@ import * as cookie from 'cookie';
 export const state = () => ({
   nsfwEnabled: false,
   nightModeEnabled: false,
+  modals: {
+    auth: {
+      visible: false,
+      data: {},
+    },
+  },
 });
 
 export const actions = {
+  showModal(context, params) {
+    context.commit('showModal', params);
+  },
+  hideModal(context, params) {
+    context.commit('hideModal', params);
+  },
   toggleNsfw(context) {
     context.commit('toggleNsfw');
   },
@@ -41,6 +53,20 @@ export const actions = {
 };
 
 export const mutations = {
+  showModal(_state, { modal, data }) {
+    if (data) _state.modals[modal].data = data;
+    _state.modals[modal].visible = true;
+  },
+  hideModal(_state, { modal, data }) {
+    _state.modals[modal].visible = false;
+    if (data) _state.modals[modal].data = data;
+  },
+  setModalData(_state, { modal, data }) {
+    _state.modals[modal].data = { ..._state.modals[modal].data, ...data };
+  },
+  clearModalData(_state, { modal }) {
+    _state.modals[modal].data = {};
+  },
   toggleNsfw(_state) {
     _state.nsfwEnabled = !_state.nsfwEnabled;
   },

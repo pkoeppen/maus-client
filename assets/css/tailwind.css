@@ -8,10 +8,11 @@
   body {
     @apply bg-gray-100 text-gray-800;
   }
+  button:focus, input:focus {
+    @apply outline-none;
+  }
 }
 
-@layer utilities {
-  .cover {
-    @apply absolute top-0 bottom-0 left-0 right-0;
-  }
+.simplebar-scrollbar.simplebar-visible::before {
+  opacity: .2 !important;
 }

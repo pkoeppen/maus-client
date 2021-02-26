@@ -29,6 +29,7 @@
     "@nuxtjs/recaptcha": "^1.0.0",
     "core-js": "^3.6.5",
     "nuxt": "^2.15.2",
+    "simplebar-vue": "^1.6.0",
     "tailwindcss-aspect-ratio": "^3.0.0"
   },
   "devDependencies": {
