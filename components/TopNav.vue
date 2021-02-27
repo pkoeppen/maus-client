@@ -5,7 +5,14 @@
   >
     <div class="w-1/3 flex items-center">
       <div class="w-64 inline-flex items-center justify-between px-6 -ml-6">
-        <i class="fas fa-bars w-4" />
+        <div class="w-4 relative">
+          <div
+            class="w-8 h-8 text-gray-600 hover:bg-gray-100 hover:text-black relative -left-2 flex justify-center items-center rounded-full cursor-pointer"
+            @click="toggleSidebar()"
+          >
+            <i class="fas fa-bars" />
+          </div>
+        </div>
         <nuxt-link to="/" class="outline-none text-xs">
           <img class="h-6" src="~/assets/svg/maus-logo-centered.svg" />
         </nuxt-link>
@@ -46,7 +53,6 @@
       </button>
       <i class="fas fa-cog text-gray-700 hover:text-black cursor-pointer" />
     </div>
-    <auth-modal />
   </nav>
 </template>
 
@@ -68,7 +74,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['showModal']),
+    ...mapMutations(['toggleSidebar', 'showModal']),
   },
 };
 </script>

@@ -4,9 +4,12 @@
     class="fixed inset-0 overflow-auto bg-black bg-opacity-80 z-40"
   >
     <!-- Overlay -->
-    <div class="absolute inset-0 z-40" @click="hideModal({ modal: 'auth' })" />
+    <div
+      class="absolute inset-0 z-40"
+      @click="hideModal({ modal: 'creatorAuth' })"
+    />
 
-    <div class="h-full w-full flex flex-col items-center p-10">
+    <div class="h-full w-full flex flex-col items-center p-10 overflow-y-auto">
       <div
         class="relative z-50 w-full max-w-sm p-6 bg-white rounded"
         style="margin: auto 0"
@@ -14,7 +17,7 @@
         <!-- Close Modal -->
         <div
           class="absolute top-0 -right-9 h-8 w-8 rounded bg-white bg-opacity-0 hover:bg-opacity-20 cursor-pointer"
-          @click="hideModal({ modal: 'auth' })"
+          @click="hideModal({ modal: 'creatorAuth' })"
         >
           <div class="flex items-center justify-center p-2 text-white">
             <i class="fas fa-times" />
@@ -23,7 +26,10 @@
 
         <!-- Header -->
         <div class="flex items-center justify-center">
-          <img class="h-10 mr-2" src="~/assets/svg/maus-logo-glyph-only.svg" />
+          <img
+            class="animate-chroma h-10 mr-2"
+            src="~/assets/svg/maus-logo-glyph-only.svg"
+          />
           <h2 class="text-xl font-bold">{{ headerText }}</h2>
         </div>
 
@@ -32,14 +38,14 @@
           <div
             :class="{ 'text-blue-500 border-blue-500': data.tab === 0 }"
             class="w-1/2 pb-1 border-b-2 cursor-pointer"
-            @click="setModalData({ modal: 'auth', data: { tab: 0 } })"
+            @click="setModalData({ modal: 'creatorAuth', data: { tab: 0 } })"
           >
             Log In
           </div>
           <div
             :class="{ 'text-blue-500 border-blue-500': data.tab === 1 }"
             class="w-1/2 pb-1 border-b-2 cursor-pointer"
-            @click="setModalData({ modal: 'auth', data: { tab: 1 } })"
+            @click="setModalData({ modal: 'creatorAuth', data: { tab: 1 } })"
           >
             Sign Up
           </div>
@@ -52,21 +58,20 @@
             spellcheck="false"
             @submit.prevent="logIn()"
           >
-            <!-- Email -->
+            <!-- Username -->
             <div class="mb-4">
               <div class="font-bold mb-1">
-                <label for="email">Email</label>
+                <label for="username">Username</label>
               </div>
               <input
-                :value="data.email"
+                :value="data.username"
                 class="outline-none px-3 py-1 w-full rounded bg-gray-200 focus:bg-white border-2 border-gray-200 hover:border-gray-300 focus:border-blue-300"
-                type="email"
-                name="email"
+                type="text"
                 @input="
                   (e) =>
                     setModalData({
-                      modal: 'auth',
-                      data: { email: e.target.value },
+                      modal: 'creatorAuth',
+                      data: { username: e.target.value },
                     })
                 "
               />
@@ -81,11 +86,10 @@
                 :value="data.password"
                 class="outline-none px-3 py-1 w-full rounded bg-gray-200 focus:bg-white border-2 border-gray-200 hover:border-gray-300 focus:border-blue-300"
                 type="password"
-                name="password"
                 @input="
                   (e) =>
                     setModalData({
-                      modal: 'auth',
+                      modal: 'creatorAuth',
                       data: { password: e.target.value },
                     })
                 "
@@ -120,16 +124,16 @@
             </div>
           </div>
 
-          <!-- Creator Auth -->
+          <!-- Subscriber Auth -->
           <button
             class="block mx-auto bg-green-500 text-white rounded px-3 py-2 text-xs"
             @click="
-              showModal({ modal: 'creatorAuth', data });
-              hideModal({ modal: 'auth' });
+              showModal({ modal: 'auth', data });
+              hideModal({ modal: 'creatorAuth' });
             "
           >
             <i class="fas fa-camera-retro mr-2" />
-            <span>Log in as a Creator</span>
+            <span>Log in as a Subscriber</span>
           </button>
         </div>
 
@@ -140,6 +144,46 @@
             spellcheck="false"
             @submit.prevent="signUp()"
           >
+            <!-- Username -->
+            <div class="mb-4">
+              <div class="flex justify-between items-baseline font-bold mb-1">
+                <label for="username">Username</label>
+                <div v-if="data.username" class="text-xs">
+                  <span class="text-gray-400">@{{ data.username }}</span
+                  ><i
+                    :class="{
+                      'text-green-400': data.usernameAvailable,
+                      'text-red-400': data.usernameAvailable === false,
+                      'fa-check': data.usernameAvailable === true,
+                      'fa-times': data.usernameAvailable === false,
+                      'fa-circle-notch animate-spin text-gray-400':
+                        data.usernameCheckLoading,
+                    }"
+                    class="fas fa-check ml-2"
+                  />
+                </div>
+              </div>
+              <input
+                :value="data.username"
+                class="outline-none px-3 py-1 w-full rounded bg-gray-200 focus:bg-white border-2 border-gray-200 hover:border-gray-300 focus:border-blue-300"
+                type="text"
+                @keydown.space.prevent
+                @input="
+                  (e) => {
+                    setModalData({
+                      modal: 'creatorAuth',
+                      data: {
+                        username: e.target.value,
+                        usernameAvailable: null,
+                        usernameCheckLoading: true,
+                      },
+                    });
+                    debounce(e.target.value);
+                  }
+                "
+              />
+            </div>
+
             <!-- Email -->
             <div class="mb-4">
               <div class="font-bold mb-1">
@@ -152,7 +196,7 @@
                 @input="
                   (e) =>
                     setModalData({
-                      modal: 'auth',
+                      modal: 'creatorAuth',
                       data: { email: e.target.value },
                     })
                 "
@@ -162,7 +206,7 @@
             <!-- Date of Birth -->
             <div class="mb-4">
               <div class="font-bold mb-1">
-                <label for="email">Date of Birth</label>
+                <label>Date of Birth</label>
               </div>
               <div class="flex gap-2">
                 <input
@@ -173,7 +217,7 @@
                   @input="
                     (e) =>
                       setModalData({
-                        modal: 'auth',
+                        modal: 'creatorAuth',
                         data: { dobMonth: e.target.value },
                       })
                   "
@@ -186,7 +230,7 @@
                   @input="
                     (e) =>
                       setModalData({
-                        modal: 'auth',
+                        modal: 'creatorAuth',
                         data: { dobDay: e.target.value },
                       })
                   "
@@ -199,7 +243,7 @@
                   @input="
                     (e) =>
                       setModalData({
-                        modal: 'auth',
+                        modal: 'creatorAuth',
                         data: { dobYear: e.target.value },
                       })
                   "
@@ -219,7 +263,7 @@
                 @input="
                   (e) =>
                     setModalData({
-                      modal: 'auth',
+                      modal: 'creatorAuth',
                       data: { password: e.target.value },
                     })
                 "
@@ -227,7 +271,7 @@
             </div>
 
             <!-- Confirm Password -->
-            <div class="mb-4">
+            <div class="mb-6">
               <div class="font-bold mb-1">
                 <label for="password">Confirm Password</label>
               </div>
@@ -238,7 +282,7 @@
                 @input="
                   (e) =>
                     setModalData({
-                      modal: 'auth',
+                      modal: 'creatorAuth',
                       data: { confirmPassword: e.target.value },
                     })
                 "
@@ -279,16 +323,16 @@
             </div>
           </div>
 
-          <!-- Creator Auth -->
+          <!-- Subscriber Auth -->
           <button
             class="block mx-auto bg-green-500 text-white rounded px-3 py-2 text-xs"
             @click="
-              showModal({ modal: 'creatorAuth', data });
-              hideModal({ modal: 'auth' });
+              showModal({ modal: 'auth', data });
+              hideModal({ modal: 'creatorAuth' });
             "
           >
             <i class="fas fa-camera-retro mr-2" />
-            <span>Sign up as a Creator</span>
+            <span>Sign up as a Subscriber</span>
           </button>
         </div>
       </div>
@@ -297,35 +341,51 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { debounce } from 'lodash';
+import { mapState, mapActions, mapMutations } from 'vuex';
 export default {
+  data() {
+    return { usernameAvailable: null, usernameCheckLoading: false };
+  },
   computed: {
     ...mapState({
-      visible: (state) => state.modals.auth.visible,
-      data: (state) => state.modals.auth.data,
+      visible: (state) => state.modals.creatorAuth.visible,
+      data: (state) => state.modals.creatorAuth.data,
     }),
     headerText() {
       switch (this.data.tab) {
         case 0:
-          return 'Log in to Maus';
+          return 'Log in as a Creator';
         case 1:
-          return 'Join Maus today';
+          return 'Become a Creator';
         default:
           return '';
       }
     },
   },
   methods: {
+    ...mapActions('api', ['checkUsernameAvailable']),
     ...mapMutations(['setModalData', 'showModal', 'hideModal']),
+
+    /*
+     * Debounce username availability checking.
+     */
+    debounce: debounce(async function () {
+      const available = await this.checkUsernameAvailable(this.data.username);
+      this.setModalData({
+        modal: 'creatorAuth',
+        data: { usernameAvailable: available, usernameCheckLoading: false },
+      });
+    }, 1000),
 
     /*
      * Call the API to login.
      */
     async logIn() {
       if (this.data.loading) return;
-      this.setModalData({ modal: 'auth', data: { loading: true } });
+      this.setModalData({ modal: 'creatorAuth', data: { loading: true } });
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      this.hideModal({ modal: 'auth' });
+      this.hideModal({ modal: 'creatorAuth' });
     },
 
     /*
@@ -333,9 +393,9 @@ export default {
      */
     async signUp() {
       if (this.data.loading) return;
-      this.setModalData({ modal: 'auth', data: { loading: true } });
+      this.setModalData({ modal: 'creatorAuth', data: { loading: true } });
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      this.hideModal({ modal: 'auth' });
+      this.hideModal({ modal: 'creatorAuth' });
     },
   },
 };

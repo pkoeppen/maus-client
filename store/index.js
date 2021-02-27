@@ -2,9 +2,18 @@ import * as cookie from 'cookie';
 
 export const state = () => ({
   nsfwEnabled: false,
-  nightModeEnabled: false,
+  darkEnabled: false,
+  sidebar: true,
   modals: {
     auth: {
+      visible: false,
+      data: {},
+    },
+    creatorAuth: {
+      visible: false,
+      data: {},
+    },
+    subscribe: {
       visible: false,
       data: {},
     },
@@ -12,18 +21,6 @@ export const state = () => ({
 });
 
 export const actions = {
-  showModal(context, params) {
-    context.commit('showModal', params);
-  },
-  hideModal(context, params) {
-    context.commit('hideModal', params);
-  },
-  toggleNsfw(context) {
-    context.commit('toggleNsfw');
-  },
-  toggleNightMode(context) {
-    context.commit('toggleNightMode');
-  },
   nuxtServerInit(context, { req, redirect }) {
     if (req.headers?.cookie) {
       // Found cookies.
@@ -54,12 +51,12 @@ export const actions = {
 
 export const mutations = {
   showModal(_state, { modal, data }) {
-    if (data) _state.modals[modal].data = data;
+    if (data) _state.modals[modal].data = data || {};
     _state.modals[modal].visible = true;
   },
   hideModal(_state, { modal, data }) {
     _state.modals[modal].visible = false;
-    if (data) _state.modals[modal].data = data;
+    if (data) _state.modals[modal].data = data || {};
   },
   setModalData(_state, { modal, data }) {
     _state.modals[modal].data = { ..._state.modals[modal].data, ...data };
@@ -67,10 +64,13 @@ export const mutations = {
   clearModalData(_state, { modal }) {
     _state.modals[modal].data = {};
   },
+  toggleSidebar(_state) {
+    _state.sidebar = !_state.sidebar;
+  },
   toggleNsfw(_state) {
     _state.nsfwEnabled = !_state.nsfwEnabled;
   },
-  toggleNightMode(_state) {
-    _state.nightModeEnabled = !_state.nightModeEnabled;
+  toggleDark(_state) {
+    _state.darkEnabled = !_state.darkEnabled;
   },
 };

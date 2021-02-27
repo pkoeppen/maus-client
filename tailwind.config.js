@@ -60,8 +60,22 @@ module.exports = {
         '1/2': '50%',
         '3/4': '75%',
       },
+      animation: {
+        chroma: 'chroma 10000ms 0ms infinite linear',
+      },
+      keyframes: {
+        chroma: {
+          '0%': { filter: 'hue-rotate(0deg)' },
+          '100%': { filter: 'hue-rotate(360deg)' },
+        },
+      },
     },
   },
-  variants: {},
+  variants: {
+    extend: {
+      translate: ['group-hover'],
+      gradientColorStops: ['group-hover'],
+    },
+  },
   plugins: [require('tailwindcss-aspect-ratio')],
 };
