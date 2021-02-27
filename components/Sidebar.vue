@@ -3,14 +3,14 @@
     <simplebar class="h-full">
       <div class="bg-white px-6 py-10 flex flex-col space-y-6 overflow-y-auto">
         <!-- Home -->
-        <div class="flex flex-col space-y-6 text-gray-700">
+        <div class="nav flex flex-col space-y-6 text-gray-700">
           <nuxt-link to="/">
             <i class="fas fa-home w-4 mr-6" /><span>Home</span>
           </nuxt-link>
         </div>
         <hr />
         <!-- Main -->
-        <div class="flex flex-col space-y-6 text-gray-700">
+        <div class="nav flex flex-col space-y-6 text-gray-700">
           <nuxt-link to="/feed/trending" class="hover:text-black"
             ><i class="fas fa-fire-alt w-4 mr-6" /><span
               >Trending</span
@@ -88,7 +88,7 @@
         </div>
         <hr />
         <!-- Help -->
-        <div class="flex flex-col space-y-6 text-gray-700">
+        <div class="nav flex flex-col space-y-6 text-gray-700">
           <nuxt-link to="/account" class="hover:text-black"
             ><i class="fas fa-cog w-4 mr-6" /><span>Settings</span></nuxt-link
           >
@@ -160,7 +160,7 @@ export default {
 </script>
 
 <style scoped>
-.nuxt-link-exact-active {
+nav .nuxt-link-exact-active {
   @apply text-gray-800 font-bold;
 }
 </style>

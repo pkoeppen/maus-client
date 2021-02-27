@@ -18,9 +18,18 @@ export const state = () => ({
       data: {},
     },
   },
+  mainScrollElement: null,
+  sidebarScrollElement: null,
+  agentData: {},
 });
 
 export const actions = {
+  async nuxtClientInit(context) {
+    const { data } = await this.$axios.get(
+      'https://www.cloudflare.com/cdn-cgi/trace'
+    );
+    context.commit('setAgentData', data);
+  },
   nuxtServerInit(context, { req, redirect }) {
     if (req.headers?.cookie) {
       // Found cookies.
@@ -37,14 +46,14 @@ export const actions = {
           throw new Error('Invalid cookie');
         }
 
-        context.commit('api/setAdmin', { token, expires, data });
+        context.commit('api/setUser', { token, expires, data });
       } catch (error) {
-        context.commit('api/setAdmin', null);
+        context.commit('api/setUser', null);
         if (req.url.startsWith('/admin')) redirect('/admin/login');
       }
     } else {
       // No cookies.
-      context.commit('api/setAdmin', null);
+      context.commit('api/setUser', null);
     }
   },
 };
@@ -72,5 +81,20 @@ export const mutations = {
   },
   toggleDark(_state) {
     _state.darkEnabled = !_state.darkEnabled;
+  },
+  setMainScrollElement(_state, element) {
+    _state.mainScrollElement = element;
+  },
+  setSidebarScrollElement(_state, element) {
+    _state.sidebarScrollElement = element;
+  },
+  setAgentData(_state, str) {
+    const data = {};
+    const lines = str.split('\n').filter((line) => line);
+    for (const line of lines) {
+      const [key, val] = line.split('=');
+      data[key] = val;
+    }
+    _state.agentData = data;
   },
 };

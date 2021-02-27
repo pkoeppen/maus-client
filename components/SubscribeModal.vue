@@ -29,12 +29,11 @@
           <div class="relative bg-gray-200 p-6 overflow-hidden">
             <nuxt-link :to="`/channel/${data.handle}`">
               <div class="relative flex items-center z-10">
-                <img
-                  class="h-14 w-14 overflow-hidden rounded-full mr-4"
-                  :src="data.avatar"
-                />
-                <div class="text-2xl font-bold mr-2">{{ data.name }}</div>
-                <i class="fa fa-boxes" />
+                <div class="h-14 w-14 overflow-hidden rounded-full mr-4">
+                  <img class="w-full object-cover" :src="data.avatar" />
+                </div>
+                <div class="text-2xl font-bold mr-3">{{ data.name }}</div>
+                <i class="fa fa-boxes text-gray-500" />
               </div>
             </nuxt-link>
             <div class="absolute inset-0">
@@ -108,8 +107,9 @@
                   Purchase a Gold subscription now and gain access to exclusive
                   content from
                   <b>{{ (data.creators || []).length }} creators</b> in this
-                  channel. Join over {{ data.subscribers }} subscribers and
-                  enjoy all premium material from
+                  channel. Subscribe to enjoy
+                  <b>{{ data.library }} paid videos</b> and all premium material
+                  from
                   <nuxt-link
                     class="text-blue-500 hover:underline"
                     :to="`/channel/${data.handle}`"
