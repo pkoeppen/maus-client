@@ -24,7 +24,7 @@
               >History</span
             ></nuxt-link
           >
-          <nuxt-link to="/studio" class="hover:text-black"
+          <nuxt-link to="/studio" class="flex items-center hover:text-black"
             ><i class="fas fa-camera w-4 mr-6" /><span>Studio</span>
             <span
               class="animate-pulse inline-flex items-center justify-center ml-3 h-4 px-1 rounded bg-red-500 text-white text-xs font-bold"

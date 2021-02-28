@@ -88,6 +88,9 @@ export const mutations = {
   setSidebarScrollElement(_state, element) {
     _state.sidebarScrollElement = element;
   },
+  scrollTop(_state) {
+    setTimeout(() => (_state.mainScrollElement.scrollTop = 0), 0);
+  },
   setAgentData(_state, str) {
     const data = {};
     const lines = str.split('\n').filter((line) => line);

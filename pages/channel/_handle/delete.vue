@@ -1,5 +1,8 @@
 <template>
-  <channel-page :channel="channel" :tab="0" />
+  <div>
+    parent view
+    <NuxtChild :key="key" />
+  </div>
 </template>
 
 <script>
@@ -15,7 +18,7 @@ export default {
       subscribers: 3297,
       library: Math.floor(Math.random() * 200),
     };
-    return { channel };
+    return { channel, key: route.path };
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {

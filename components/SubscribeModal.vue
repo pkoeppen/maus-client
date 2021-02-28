@@ -110,10 +110,10 @@
                   channel. Subscribe to enjoy
                   <b>{{ data.library }} paid videos</b> and all premium material
                   from
-                  <nuxt-link
-                    class="text-blue-500 hover:underline"
-                    :to="`/channel/${data.handle}`"
-                    >{{ data.name }}</nuxt-link
+                  <span
+                    class="text-blue-500 hover:underline cursor-pointer"
+                    @click="hideModal({ modal: 'subscribe' })"
+                    >{{ data.name }}</span
                   >
                   today.
                 </div>

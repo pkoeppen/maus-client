@@ -1,21 +1,59 @@
 <template>
-  <channel-page :channel="channel" :tab="3" />
+  <div>
+    <!-- Tabs -->
+    <div class="flex text-center font-bold my-6">
+      <nuxt-link
+        :to="`/channel/${channel.handle}`"
+        class="w-1/2 py-2 border-b-2 cursor-pointer"
+      >
+        Overview
+      </nuxt-link>
+      <nuxt-link
+        :to="`/channel/${channel.handle}/creators`"
+        class="w-1/2 py-2 border-b-2 cursor-pointer"
+      >
+        <div class="inline-flex items-center">
+          <span>Creators</span
+          ><span
+            class="inline-flex items-center justify-center ml-2 h-4 px-1 bg-red-500 rounded text-white text-xs font-bold"
+          >
+            {{ channel.creators.length }}
+          </span>
+        </div>
+      </nuxt-link>
+      <nuxt-link
+        :to="`/channel/${channel.handle}/community`"
+        class="w-1/2 py-2 border-b-2 cursor-pointer"
+      >
+        Community
+      </nuxt-link>
+      <nuxt-link
+        :to="`/channel/${channel.handle}/about`"
+        class="w-1/2 py-2 border-b-2 cursor-pointer text-blue-500 border-blue-500 bg-gray-100"
+      >
+        About
+      </nuxt-link>
+    </div>
+
+    <!-- Tab Panel -->
+    <div class="flex gap-6">
+      <div class="p-6">
+        description contact links stats (growth chart, joined, views, creator
+        count, video count, post count, comment count, avg videos per month,
+        etc)
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 export default {
-  asyncData({ route }) {
-    const channel = {
-      avatar:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg/330px-Elon_Musk_Royal_Society_%28crop1%29.jpg',
-      handle: route.params.handle,
-      name: 'Some Channel',
-      creators: new Array(32).fill({}),
-      subscribers: 3297,
-      library: Math.floor(Math.random() * 200),
-    };
-    return { channel, scrollTop: false };
+  props: {
+    channel: {
+      type: Object,
+      required: true,
+    },
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -30,13 +68,8 @@ export default {
     }
     next();
   },
-  computed: {
-    ...mapState(['mainScrollElement']),
-  },
   methods: {
-    scrollTop() {
-      setTimeout(() => (this.mainScrollElement.scrollTop = 0), 0);
-    },
+    ...mapMutations(['scrollTop']),
   },
 };
 </script>
