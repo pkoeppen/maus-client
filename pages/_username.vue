@@ -10,24 +10,21 @@
       <section class="w-full max-w-6xl pb-6">
         <div class="w-full p-6 bg-white shadow-lg rounded">
           <div class="flex items-center justify-between">
-            <nuxt-link
-              :to="`/channel/${channel.handle}`"
-              class="flex items-center"
-            >
+            <nuxt-link :to="`/${creator.username}`" class="flex items-center">
               <div class="h-20 w-20 overflow-hidden rounded-full mr-4">
-                <img class="w-full h-full object-cover" :src="channel.avatar" />
+                <img class="w-full h-full object-cover" :src="creator.avatar" />
               </div>
               <div>
                 <div class="flex items-center">
-                  <div class="text-2xl font-bold mr-3">{{ channel.name }}</div>
-                  <i class="fa fa-boxes text-gray-500" />
+                  <div class="text-2xl font-bold mr-2">{{ creator.name }}</div>
+                  <i class="fa fa-check-circle text-gray-500" />
                 </div>
                 <div class="flex items-center text-sm">
                   <div class="text-gray-500 mr-3 font-bold">
-                    &copy;{{ channel.handle }}
+                    @{{ creator.username }}
                   </div>
                   <div class="rounded-full w-2 h-2 bg-red-500 mr-1" />
-                  <div>{{ channel.subscribers }} Subscribers</div>
+                  <div>{{ creator.subscribers }} Subscribers</div>
                 </div>
               </div>
             </nuxt-link>
@@ -58,38 +55,25 @@
           <NuxtChild
             v-if="$route.matched.length > 1"
             :key="key"
-            :channel="channel"
+            :creator="creator"
           />
           <div v-else>
             <!-- Tabs -->
             <div class="flex text-center font-bold my-6">
               <nuxt-link
-                :to="`/channel/${channel.handle}`"
+                :to="`/${creator.username}`"
                 class="w-1/2 py-2 border-b-2 cursor-pointer text-blue-500 border-blue-500 bg-gray-100"
               >
                 Overview
               </nuxt-link>
               <nuxt-link
-                :to="`/channel/${channel.handle}/creators`"
-                class="w-1/2 py-2 border-b-2 cursor-pointer"
-              >
-                <div class="inline-flex items-center">
-                  <span>Creators</span
-                  ><span
-                    class="inline-flex items-center justify-center ml-2 h-4 px-1 bg-red-500 rounded text-white text-xs font-bold"
-                  >
-                    {{ channel.creators.length }}
-                  </span>
-                </div>
-              </nuxt-link>
-              <nuxt-link
-                :to="`/channel/${channel.handle}/community`"
+                :to="`/${creator.username}/community`"
                 class="w-1/2 py-2 border-b-2 cursor-pointer"
               >
                 Community
               </nuxt-link>
               <nuxt-link
-                :to="`/channel/${channel.handle}/about`"
+                :to="`/${creator.username}/about`"
                 class="w-1/2 py-2 border-b-2 cursor-pointer"
               >
                 About
@@ -122,7 +106,7 @@
               </div>
               <div class="bg-white w-60 flex flex-col">
                 <div class="font-bold text-md">
-                  The Best Channel in the World
+                  The Best Creator in the World
                 </div>
                 <div class="text-xs text-gray-500 mb-3">
                   Updated: 2 Weeks Ago
@@ -147,7 +131,7 @@
                 </div>
                 <nuxt-link
                   class="text-center bg-gradient-to-l from-gray-500 to-gray-400 hover:from-gray-600 hover:to-gray-500 rounded text-white px-3 py-2 w-full font-bold"
-                  :to="`/channel/${channel.handle}/creators`"
+                  :to="`/${creator.username}/creators`"
                 >
                   <i class="fas fa-users w-4 mr-3" /><span>Our Creators</span>
                 </nuxt-link>
@@ -159,7 +143,7 @@
       <section class="w-full my-6">
         <div class="text-2xl my-4">Recent videos</div>
         <h1
-          v-if="!channel.creators.length"
+          v-if="!creator.videos.length"
           class="text-center text-xl text-gray-400"
         >
           No content found.
@@ -168,19 +152,16 @@
           v-else
           class="flex flex-wrap grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
-          <div v-for="(creator, n) of channel.creators.slice(0, 4)" :key="n">
+          <div v-for="(video, n) of creator.videos.slice(0, 4)" :key="n">
             <nuxt-link :to="`/watch?v=${n}`">
               <div class="relative aspect-ratio-16/9">
                 <div class="absolute inset-0">
-                  <img
-                    :src="creator.video"
-                    class="object-cover w-full h-full"
-                  />
+                  <img :src="video.src" class="object-cover w-full h-full" />
                 </div>
                 <div
                   class="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black bg-opacity-30 text-white text-xs font-bold rounded"
                 >
-                  {{ creator.time }}
+                  {{ video.time }}
                 </div>
               </div>
             </nuxt-link>
@@ -197,7 +178,7 @@
                 <nuxt-link
                   :to="`/watch?v=${n}`"
                   class="font-bold text-sm mb-1 block"
-                  >{{ creator.title }}</nuxt-link
+                  >{{ video.title }}</nuxt-link
                 >
                 <nuxt-link
                   :to="`/${creator.username}`"
@@ -218,7 +199,7 @@
       <section class="w-full my-6">
         <div class="text-2xl my-4">Most popular</div>
         <h1
-          v-if="!channel.creators.length"
+          v-if="!creator.videos.length"
           class="text-center text-xl text-gray-400"
         >
           No content found.
@@ -227,33 +208,33 @@
           v-else
           class="flex flex-wrap grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
-          <div v-for="(creator, n) of channel.creators.slice(4, 8)" :key="n">
+          <div v-for="(video, n) of creator.videos.slice(4, 8)" :key="n">
             <nuxt-link :to="`/watch?v=${n}`">
               <div class="relative aspect-ratio-16/9">
                 <div class="absolute inset-0">
-                  <img
-                    :src="creator.video"
-                    class="object-cover w-full h-full"
-                  />
+                  <img :src="video.src" class="object-cover w-full h-full" />
                 </div>
                 <div
                   class="absolute bottom-1.5 right-1.5 px-1 py-0.5 bg-black bg-opacity-30 text-white text-xs font-bold rounded"
                 >
-                  {{ creator.time }}
+                  {{ video.time }}
                 </div>
               </div>
             </nuxt-link>
             <div class="flex mt-3 space-x-2">
               <nuxt-link :to="`/${creator.username}`">
                 <div class="w-10 h-10 rounded-full overflow-hidden">
-                  <img :src="creator.avatar" />
+                  <img
+                    :src="creator.avatar"
+                    class="w-full h-full object-cover"
+                  />
                 </div>
               </nuxt-link>
               <div class="flex-grow">
                 <nuxt-link
                   :to="`/watch?v=${n}`"
                   class="font-bold text-sm mb-1 block"
-                  >{{ creator.title }}</nuxt-link
+                  >{{ video.title }}</nuxt-link
                 >
                 <nuxt-link
                   :to="`/${creator.username}`"
@@ -282,46 +263,52 @@ export default {
     const { data } = await $axios.get(
       'https://randomuser.me/api?results=50&nat=us,dk,de,es,fr,gb'
     );
-    const creators = data.results
-      .slice(0, 5 + Math.floor(Math.random() * 35))
-      .map((creator, n) => {
-        return {
-          avatar: `https://randomuser.me/api/portraits/men/${n}.jpg`,
-          username: creator.login.username,
-          name: `${creator.name.first} ${creator.name.last}`,
-          video: `https://picsum.photos/seed/${
-            (n + 1) * Math.random()
-          }/400/225`,
-          videoCount: Math.floor(Math.random() * 100),
-          viewCount: Math.floor(Math.random() * 500000),
+    const channels = data.results.slice(30, 35).map((obj, n) => ({
+      avatar: `https://randomuser.me/api/portraits/men/${n}.jpg`,
+      handle: obj.login.username,
+      name: `${obj.name.first} ${obj.name.last}`,
+      subscribers: 3297,
+      library: Math.floor(Math.random() * 200),
+    }));
+    let creator = data.results.slice(0, 1);
+    creator = creator.map((creator, n) => {
+      return {
+        avatar: `https://randomuser.me/api/portraits/men/${n}.jpg`,
+        username: route.params.username,
+        name: `${creator.name.first} ${creator.name.last}`,
+        videos: data.results.slice(1).map((obj, n) => ({
+          src: `https://picsum.photos/seed/${(n + 1) * Math.random()}/400/225`,
           title:
-            (Math.random() > 0.5 ? `${creator.name.last} ` : '') +
-            creator.location.state,
+            (Math.random() > 0.5
+              ? `${
+                  data.results[Math.floor(Math.random() * data.results.length)]
+                    .name.last
+                } `
+              : '') +
+            data.results[Math.floor(Math.random() * data.results.length)]
+              .location.state,
           time: `${Math.floor(Math.random() * 60)}:${String(
             Math.floor(Math.random() * 60)
           ).padStart(2, '0')}`,
-        };
-      });
-    const channel = {
-      avatar:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg/330px-Elon_Musk_Royal_Society_%28crop1%29.jpg',
-      handle: route.params.handle,
-      name: 'Some Channel',
-      creators,
-      subscribers: 3297,
-      library: Math.floor(Math.random() * 200),
-    };
-    return { channel, key: route.path };
+        })),
+        channels,
+        subscribers: 3297,
+        videoCount: Math.floor(Math.random() * 100),
+        viewCount: Math.floor(Math.random() * 500000),
+      };
+    })[0];
+
+    return { creator, key: route.path };
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (!to.path.startsWith(`/channel/${from.params.handle}`)) {
+      if (!to.path.startsWith(`/${from.params.username}`)) {
         vm.scrollTop();
       }
     });
   },
   beforeRouteUpdate(to, from, next) {
-    if (!to.path.startsWith(`/channel/${from.params.handle}`)) {
+    if (!to.path.startsWith(`/${from.params.username}`)) {
       this.scrollTop();
     }
     next();

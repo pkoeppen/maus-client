@@ -146,8 +146,8 @@
           >
             <!-- Username -->
             <div class="mb-4">
-              <div class="flex justify-between items-baseline font-bold mb-1">
-                <label for="username">Username</label>
+              <div class="flex justify-between items-baseline mb-1">
+                <label for="username" class="font-bold">Username</label>
                 <div v-if="data.username" class="text-xs">
                   <span class="text-gray-400">@{{ data.username }}</span
                   ><i
@@ -311,7 +311,7 @@
               type="submit"
             >
               <i v-if="data.loading" class="fas fa-asterisk animate-spin" />
-              <span v-else>Sign Up</span>
+              <span v-else>Next</span>
             </button>
           </form>
 

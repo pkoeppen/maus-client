@@ -82,7 +82,7 @@
             <div class="flex flex-col">
               <div class="flex items-center">
                 <div class="text-md font-bold mr-1">{{ creator.name }}</div>
-                <i class="fa fa-check-circle text-gray-500" />
+                <i class="fa fa-check-circle text-gray-500 text-xs" />
               </div>
               <div class="text-gray-500 mr-3 text-sm">
                 @{{ creator.username }}
