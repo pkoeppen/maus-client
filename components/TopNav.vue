@@ -46,7 +46,7 @@
         <span>Log In</span>
       </button>
       <button
-        class="bg-green-400 hover:bg-green-500 text-white rounded px-3 py-2 font-bold mr-6"
+        class="bg-gradient-to-tr from-gray-400 to-gray-600 hover:from-gray-500 hover:to-gray-700 text-white rounded px-3 py-2 font-bold mr-6"
         @click="showModal({ modal: 'auth', data: { tab: 1 } })"
       >
         <span>Sign Up</span>

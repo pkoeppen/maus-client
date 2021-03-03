@@ -4,7 +4,7 @@
       <div class="bg-white px-6 py-10 flex flex-col space-y-6 overflow-y-auto">
         <!-- Home -->
         <div class="nav flex flex-col space-y-6 text-gray-700">
-          <nuxt-link to="/">
+          <nuxt-link class="home" to="/">
             <i class="fas fa-home w-4 mr-6" /><span>Home</span>
           </nuxt-link>
         </div>
@@ -40,7 +40,7 @@
             Sign in to like videos, comment, and subscribe.
           </div>
           <button
-            class="group bg-gradient-to-tr from-blue-400 to-green-400 rounded text-white px-3 py-2 w-full font-bold"
+            class="group bg-gradient-to-tr from-gray-400 to-gray-700 rounded text-white px-3 py-2 w-full font-bold"
             @click="showModal({ modal: 'auth', data: { tab: 0 } })"
           >
             <div
@@ -90,7 +90,7 @@
         <!-- Help -->
         <div class="nav flex flex-col space-y-6 text-gray-700">
           <nuxt-link to="/account" class="hover:text-black"
-            ><i class="fas fa-cog w-4 mr-6" /><span>Settings</span></nuxt-link
+            ><i class="fas fa-cog w-4 mr-6" /><span>Account</span></nuxt-link
           >
           <nuxt-link to="/help" class="hover:text-black">
             <i class="fas fa-question-circle w-4 mr-6" /><span>Help</span>
@@ -160,7 +160,10 @@ export default {
 </script>
 
 <style scoped>
-nav .nuxt-link-exact-active {
+.nav .nuxt-link-exact-active {
+  @apply text-gray-800 font-bold;
+}
+.nav .nuxt-link-active:not(.home) {
   @apply text-gray-800 font-bold;
 }
 </style>

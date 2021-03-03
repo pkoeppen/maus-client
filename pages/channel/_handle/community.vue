@@ -4,13 +4,13 @@
     <div class="flex text-center font-bold my-6">
       <nuxt-link
         :to="`/channel/${channel.handle}`"
-        class="w-1/2 py-2 border-b-2 cursor-pointer"
+        class="w-full py-2 border-b-2 cursor-pointer"
       >
         Overview
       </nuxt-link>
       <nuxt-link
         :to="`/channel/${channel.handle}/creators`"
-        class="w-1/2 py-2 border-b-2 cursor-pointer"
+        class="w-full py-2 border-b-2 cursor-pointer"
       >
         <div class="inline-flex items-center">
           <span>Creators</span
@@ -23,13 +23,13 @@
       </nuxt-link>
       <nuxt-link
         :to="`/channel/${channel.handle}/community`"
-        class="w-1/2 py-2 border-b-2 cursor-pointer text-blue-500 border-blue-500 bg-gray-100"
+        class="w-full py-2 border-b-2 cursor-pointer text-blue-500 border-blue-500 bg-gray-100"
       >
         Community
       </nuxt-link>
       <nuxt-link
         :to="`/channel/${channel.handle}/about`"
-        class="w-1/2 py-2 border-b-2 cursor-pointer"
+        class="w-full py-2 border-b-2 cursor-pointer"
       >
         About
       </nuxt-link>

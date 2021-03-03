@@ -1,5 +1,12 @@
 module.exports = {
   theme: {
+    purge: [
+      './components/**/*.{vue,js}',
+      './layouts/**/*.vue',
+      './pages/**/*.vue',
+      './plugins/**/*.{js,ts}',
+      './nuxt.config.{js,ts}',
+    ],
     container: {
       center: true,
     },
